@@ -73,7 +73,7 @@ def update_figure_layout(country_list):
             'data': traces,
             'layout': dict (
                 width=1000,height=650,
-                xaxis={'title':'Timeline','tickangle':-45,'nticks':20,
+                xaxis={'title':'Timeline in Days','tickangle':-45,'nticks':20,
                 'tickfont':dict(size=14,color="#0c6887"),},yaxis=my_yaxis)}
 
 if __name__ == '__main__':

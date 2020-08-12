@@ -21,15 +21,15 @@ app.layout = html.Div([
     dcc.Markdown('''
     #  Data Science Project @ TU_KL on COVID-19 Dataset-Part 1
 
-    * Goal of the project is to learn data science by applying a cross-industry standard process. The default layout contains the confirmed infected cases in the log-scale format on the Y-axis
-    and Timeline in Days on the X-axis.
+    * Goal of the project is to learn data science by applying a cross-industry standard process. The default layout
+    contains the confirmed infected cases in the log-scale format for options (1 & 2); Approximated doubling rate 
+    over 3 days for options (3 & 4) on the Y-axis and Timeline in Days on the X-axis.
 
     ### The first dropdown menu enables selection of one or multiple  countries for visualization. The seconds dropdown menu contains four options:
         1. The ‘Timeline Confirmed’ represents confirmed infected cases along the timeline.
-        2. The ‘Timeline Confirmed Filtered’ represents filtered (after applying sav-gol filter)confirmed infected cases along the timeline.
-        3. The ‘Timeline Doubling Rate’ represents the doubling rate of the infected cases along the timeline from the first option.
-        4. The ‘Timeline Doubling Rate Filtered’ represents the doubling rate of the infected cases along the timeline from the second option.
-
+        2. The ‘Timeline Confirmed Filtered’ represents filtered (after applying sav-gol filter) confirmed infected cases along the timeline.
+        3. The ‘Timeline Doubling Rate’ represents calculated doubling rate on the infected cases along the timeline from the 1st option.
+        4. The ‘Timeline Doubling Rate Filtered’ represents calculated doubling rate on the infected cases along the timeline from the 2nd option.
 
     '''),
 
@@ -64,7 +64,7 @@ app.layout = html.Div([
     [Input('country_drop_down', 'value'),
     Input('doubling_time', 'value')])
 def update_figure_layout(country_list,show_doubling):
-    if 'doubling_rate' in show_doubling:
+    if 'DR' in show_doubling:
         my_yaxis={'type':"log",
                'title':'Approximated doubling rate over 3 days (larger numbers are better #stayathome)'
           }
