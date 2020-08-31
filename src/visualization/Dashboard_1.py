@@ -2,12 +2,11 @@
 import pandas as pd
 import numpy as np
 import dash
-print('Your current dash board version is:' + dash.__version__)
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output,State
 import plotly.graph_objects as go
-import os
+print('Your current dash board version is:' + dash.__version__)
 
 # import local CSV file as a dataframe
 df_input_large=pd.read_csv('data/processed/COVID_final_set.csv',sep=';')
@@ -22,7 +21,7 @@ app.layout = html.Div([
     #  Data Science Project @ TU_KL on COVID-19 Dataset-Part 1
 
     * Goal of the project is to learn data science by applying a cross-industry standard process. The default layout
-    contains the confirmed infected cases in the log-scale format for options (1 & 2); Approximated doubling rate 
+    contains the confirmed infected cases in the log-scale format for options (1 & 2); Approximated doubling rate
     over 3 days for options (3 & 4) on the Y-axis and Timeline in Days on the X-axis.
 
     ### The first dropdown menu enables selection of one or multiple  countries for visualization. The seconds dropdown menu contains four options:
@@ -40,7 +39,7 @@ app.layout = html.Div([
     dcc.Dropdown(
         id='country_drop_down',
         options=[ {'label': each,'value':each} for each in df_input_large['country'].unique()],
-        value=['Germany','India'], # which are pre-selected in default layout
+        value=['Germany','Italy'], # which are pre-selected in default layout
         multi=True
     ),
 

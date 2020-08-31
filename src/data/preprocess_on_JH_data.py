@@ -10,13 +10,7 @@ def store_relational_datafrmae_for_JH_data():
     pd_data=pd_raw.rename(columns={'Country/Region':'country','Province/State':'state'})
     pd_data['state']=pd_data['state'].fillna('no')
     pd_data=pd_data.drop(['Lat','Long'],axis=1)
-    Final_relational_model=pd_data.set_index(['state','country']) \
-                                .T                              \
-                                .stack(level=[0,1])             \
-                                .reset_index()                  \
-                                .rename(columns={'level_0':'date',
-                                                   0:'confirmed'},
-                                                  )
+    Final_relational_model=pd_data.set_index(['state','country']) .T.stack(level=[0,1]).reset_index().rename(columns={'level_0':'date', 0:'confirmed'})
 
     Final_relational_model['date']=Final_relational_model.date.astype('datetime64[ns]')
     Final_relational_model.to_csv('data/processed/COVID_relational_confirmed.csv',sep=';',index=False)

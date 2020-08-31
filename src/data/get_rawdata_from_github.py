@@ -1,16 +1,15 @@
 #import require packages
-import subprocess
-import os
 import pandas as pd
 import numpy as np
 from datetime import datetime
 import requests
 import json
+import subprocess
 
 #define a function to gather data from johns hopkins by doing git_pull
 def get_johns_hopkins_data():
     git_pull = subprocess.Popen('git pull',
-                         cwd = os.path.dirname('C:/Users/dhame/ds_covid-19/data/raw/COVID-19/'),
+                         cwd = os.path.dirname('data/raw/COVID-19/'),
                          shell = True,stdout = subprocess.PIPE,stderr = subprocess.PIPE )
     (out, error) = git_pull.communicate()
     print("Error : " + str(error))
@@ -26,7 +25,7 @@ def get_germany_data():
         final_list.append(each_dict['attributes'])
     pd_final_list=pd.DataFrame(final_list)
     pd_final_list.to_csv('data/raw/NPGEO/Germany_statewise_data.csv',sep=';')
-    #print(' Number of regions rows: '+str(pd_full_list.shape[0]))
+    print(' Number of rows data stored (regionwise): '+str(pd_final_list.shape[0]))
 
 if __name__ == '__main__':
     get_johns_hopkins_data()

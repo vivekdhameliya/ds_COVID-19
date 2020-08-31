@@ -1,15 +1,12 @@
 # importing required python packages
-import os
 import pandas as pd
 import numpy as np
 from datetime import datetime
 from scipy import optimize
 from scipy import integrate
 
-#setting parameters for DataFrame
-pd.set_option('display.max_rows', 500)
 #importing data frame
-data_raw = pd.read_csv('C:/Users/dhame/ds_covid-19/data/raw/COVID-19/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv')
+data_raw = pd.read_csv('data/raw/COVID-19/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv')
 country_list = data_raw['Country/Region'].unique() #making country_list
 date = data_raw.columns[4:]
 df_dhameli = pd.DataFrame({'Date': date})
@@ -17,9 +14,9 @@ df_dhameli = pd.DataFrame({'Date': date})
 #converting data_raw DataFrame into format that we can use for SIR algorithm
 for each in country_list:
     df_dhameli[each] = np.array(data_raw[data_raw['Country/Region'] == each].iloc[:,4::].sum(axis=0)).T
-df_dhameli.to_csv("C:/Users/dhame/ds_covid-19/data/processed/SIR.csv", sep = ';', index=False)
+df_dhameli.to_csv('data/processed/SIR.csv', sep = ';', index=False)
 
-df_analyse=pd.read_csv('C:/Users/dhame/ds_covid-19/data/processed/SIR.csv',sep=';')
+df_analyse=pd.read_csv('data/processed/SIR.csv',sep=';')
 df_analyse.sort_values('Date',ascending=True).head()
 
 # Intialize parameter
@@ -56,10 +53,10 @@ for country in df_data.columns[1:]:
         fit_odeint_func(t, *popt)
         popt, pcov = optimize.curve_fit(fit_odeint_func, t, ydata, maxfev=5000)
         perr = np.sqrt(np.diag(pcov))
-        fitted=fit_odeint_func(t, *popt)
-        fitted_pad = np.concatenate((np.zeros(df_data.shape[0]-len(fitted)) ,fitted)) # concatenate fitted and padded array into list
-        df_data[country + '_fitted'] = fitted_pad
+        val_fitted=fit_odeint_func(t, *popt)
+        col_fitted = np.concatenate((np.zeros(df_data.shape[0]-len(val_fitted)) ,val_fitted)) # concatenate fitted and padded array into list
+        df_data[country + '_fitted'] = col_fitted
 
 df_data = df_data.reset_index(drop=True)
 #save CSV file to local drive for future use
-df_data.to_csv('C:/Users/dhame/ds_covid-19/data/processed/SIR_fitted.csv', sep = ';')
+df_data.to_csv('data/processed/SIR_fitted.csv', sep = ';')
